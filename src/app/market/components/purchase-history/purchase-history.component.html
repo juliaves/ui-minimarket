@@ -1,0 +1,120 @@
+<div *ngIf="errorMessage" class="alert alert-danger text-center" role="alert">
+  {{errorMessage}}
+</div>
+<div class="d-flex flex-row mb-3">
+  <div class="col">
+    <div class="gr-sidebar">
+      <div class="container">
+        <h5 class="mrg-vert">FILTER</h5>
+        <form [formGroup]="form">
+
+          <!-- FIRST NAME -->
+          <div class="mb-3">
+            <label for="formFirstName" class="form-label fs-15">
+              First name:
+            </label>
+            <input formControlName="firstName" type="text" class="form-control" id="formFirstName">
+          </div>
+
+          <!-- LAST NAME -->
+          <div class="mb-3">
+            <label for="formLastName" class="form-label fs-15">
+              Last name:
+            </label>
+            <input formControlName="lastName" type="text" class="form-control" id="formLastName">
+          </div>
+
+          <!-- PRODUCT NAME -->
+          <div class="mb-3">
+            <label for="formProductName" class="form-label fs-15">
+              Product name:
+            </label>
+            <input formControlName="productName" type="text" class="form-control" id="formProductName">
+          </div>
+
+          <!-- MAX PRICE -->
+          <div class="mb-3 row">
+            <label for="formMaxPrice" class="col-sm-5 col-form-label fs-15">
+              Max price:
+            </label>
+            <div class="col-sm-7">
+              <input formControlName="maxPrice" type="number" class="form-control" id="formMaxPrice">
+            </div>
+            <div class="alert alert-danger text-left small-font pd-5" *ngIf="form.controls['maxPrice'].hasError('min')">
+              Minimum required number is 0.
+            </div>
+          </div>
+
+          <!-- MAX QUANTITY -->
+          <div class="mb-3 row">
+            <label for="formMaxQuantity" class="col-sm-5 col-form-label fs-15">
+              Max quantity:
+            </label>
+            <div class="col-sm-7">
+              <input formControlName="maxQuantity" type="number" class="form-control" id="formMaxQuantity">
+            </div>
+            <div class="alert alert-danger text-left small-font pd-5"
+              *ngIf="form.controls['maxQuantity'].hasError('min')">
+              Minimum required number is 1.
+            </div>
+          </div>
+
+          <!-- MAX TOTAL -->
+          <div class="mb-3 row">
+            <label for="formMaxTotal" class="col-sm-5 col-form-label fs-15">
+              Max total:
+            </label>
+            <div class="col-sm-7">
+              <input formControlName="maxTotal" type="number" class="form-control" id="formMaxTotal">
+            </div>
+            <div class="alert alert-danger text-left small-font pd-5" *ngIf="form.controls['maxTotal'].hasError('min')">
+              Minimum required number is 0.
+            </div>
+          </div>
+
+
+        </form>
+
+        <button class="btn btn-success" (click)="searchPurchases()">Search</button>
+
+      </div>
+
+    </div>
+  </div>
+  <div class="col col-sm-9 mrg-vert">
+    <table class="table table-hover table-bordered table-fitted">
+      <thead class="table-active sticky-header">
+        <tr>
+          <th scope="col">First name</th>
+          <th scope="col">Last name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Date</th>
+          <th scope="col">Product</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let purchase of purchases$ | async">
+          <tr>
+            <td class="text-uppercase">{{purchase.firstName}}</td>
+            <td class="text-uppercase">{{purchase.lastName}}</td>
+            <td>{{purchase.email}}</td>
+            <td>{{purchase.date | date:'dd.MM.yyyy hh:mm a'}}</td>
+            <td [colSpan]="3"></td>
+          </tr>
+          <tr *ngFor="let cartProduct of purchase.cartProducts; let last = last;">
+            <td [colSpan]="4"></td>
+            <td class="text-uppercase">{{cartProduct.name}}</td>
+            <td>{{cartProduct.price}}</td>
+            <td>{{cartProduct.quantity}}</td>
+          </tr>
+          <tr class="border-groove">
+            <td [colSpan]="7" class="fw-bold">Total:
+              {{(calculateTotalSum(purchase.cartProducts)).toFixed(2)}}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

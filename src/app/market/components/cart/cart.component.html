@@ -1,0 +1,74 @@
+<div *ngIf="errorMessage" class="alert alert-danger text-center" role="alert">
+  {{errorMessage}}
+</div>
+
+<div class="d-flex flex-row mb-3">
+  <div class="col">
+    <div class="gr-sidebar">
+      <div class="container">
+        <h5 class="mrg-vert">PERSONAL DATA</h5>
+        <form [formGroup]="form">
+          <!-- FIRST NAME -->
+          <div class="mb-3">
+            <label for="formFirstName" class="form-label fs-15">
+              <app-required-marker></app-required-marker>First name:
+            </label>
+            <input formControlName="firstName" type="text" class="form-control" id="formFirstName">
+          </div>
+          <!-- LAST NAME -->
+          <div class="mb-3">
+            <label for="formLastName" class="form-label fs-15">
+              <app-required-marker></app-required-marker>Last name:
+            </label>
+            <input formControlName="lastName" type="text" class="form-control" id="formLastName">
+          </div>
+          <!-- EMAIL -->
+          <div class="mb-3">
+            <label for="formEmail" class="form-label fs-15">
+              Email address:
+            </label>
+            <input formControlName="email" type="email" class="form-control" id="formEmail">
+            <div class="alert alert-danger text-left small-font" *ngIf="form.controls['email'].hasError('email')">
+              Not proper email pattern.
+            </div>
+          </div>
+        </form>
+        <button class="btn btn-success" (click)="submitPurchase()">Submit purchase</button>
+      </div>
+    </div>
+  </div>
+  <div class="col col-sm-9 mrg-vert">
+    <ng-container *ngIf="cartProducts.length; else noItems">
+      <table class="table table-hover table-bordered table-fitted">
+        <thead class="table-active sticky-header">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of cartProducts">
+            <td class="text-uppercase">{{product.name}}</td>
+            <td>{{product.price}}</td>
+            <th scope="row">{{product.quantity}}</th>
+            <th scope="row">{{(product.price * product.quantity).toFixed(2)}}</th>
+            <td class="text-center">
+              <button type="button" class="btn btn-danger btn-sm" (click)="removeProductFromCart(product)">
+                <i class="bi bi-x-square"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="fw-bold text-uppercase">
+        Total: {{total.toFixed(2)}}
+      </div>
+    </ng-container>
+    <ng-template #noItems>
+      <h5 class="text-center">There are no items in your cart!</h5>
+    </ng-template>
+  </div>
+</div>

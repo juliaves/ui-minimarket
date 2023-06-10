@@ -1,0 +1,1 @@
+export type AppTab = 'PRODUCTS' | 'PURCHASE_HISTORY' | 'CART';
