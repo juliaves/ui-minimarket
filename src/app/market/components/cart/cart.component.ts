@@ -15,7 +15,6 @@ export class CartComponent extends Destroyable implements OnInit {
   @Output() onCartCleared = new EventEmitter<void>();
 
   cartProducts: CartProduct[];
-  total: number = 0;
   errorMessage: string = null;
 
   constructor(
@@ -27,7 +26,7 @@ export class CartComponent extends Destroyable implements OnInit {
   form = new FormGroup({
     firstName: new FormControl(null, { validators: Validators.required, updateOn: 'change' }),
     lastName: new FormControl(null, { validators: Validators.required, updateOn: 'change' }),
-    email: new FormControl(null, { validators: [Validators.email], updateOn: 'change' })
+    email: new FormControl(null, { validators: Validators.email, updateOn: 'change' })
   });
 
   private get firstName(): AbstractControl {
@@ -45,12 +44,15 @@ export class CartComponent extends Destroyable implements OnInit {
   ngOnInit(): void {
     this.marketStoreService.select.cartProducts().pipe(takeUntil(this.destroyed$)).subscribe(cartProducts => {
       this.cartProducts = cartProducts;
-      this.total = this.calculateTotalSum();
     });
   }
 
-  calculateTotalSum(): number {
-    return this.cartProducts.reduce((acc, cur) => acc + (cur.price * cur.quantity), 0);
+  calculateTotalSum(cartProducts: CartProduct[]): any {
+    let sum = '0';
+    cartProducts.forEach(product => {
+      sum += (product.price * product.quantity)
+    });
+    return sum;
   }
 
   submitPurchase(): void {
@@ -81,7 +83,6 @@ export class CartComponent extends Destroyable implements OnInit {
   }
 
   removeProductFromCart(product: CartProduct) {
-    this.total = this.total - (product.price * product.quantity);
     this.marketStoreService.dispatch.removeProductFromCart(product.id);
     this.onCartProductRemoved.emit(product.quantity);
   }

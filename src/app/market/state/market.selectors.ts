@@ -14,6 +14,19 @@ export const selectProducts = createSelector(
   state => state.products
 );
 
+// New product selects
+
+const selectNewProductState = createSelector(
+  selectState,
+  state => state.newProductState
+);
+
+
+export const selectNewProductSaveStatus = createSelector(
+  selectNewProductState,
+  state => state.saveStatus
+);
+
 // Purchase history selects
 
 const selectPurchaseHistoryState = createSelector(

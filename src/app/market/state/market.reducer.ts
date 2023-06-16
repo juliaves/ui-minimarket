@@ -2,20 +2,29 @@ import {createReducer, on} from '@ngrx/store';
 import {CartProduct} from '../models/cart-product.model';
 import {ProcessingStatus} from '../models/processing-status.type';
 import {Product} from '../models/product.model';
-import {addProductToCart, clearCart, loadProductsFailure, loadProductsSuccess, loadPurchasesFailure, loadPurchasesSuccess, removeProductFromCart} from './market.actions';
+import {addNewProductFailure, addNewProductSuccess, addProductToCart, clearCart, clearNewProductSaveStatus, loadProductsFailure, loadProductsSuccess, loadPurchasesFailure, loadPurchasesSuccess, removeProductFromCart} from './market.actions';
 import {Purchase} from '../models/purchase.model';
 
 // Market state
 export interface MarketState {
   products: Product[];
   productsMaxPrice: number;
-  loadStatus: ProcessingStatus | undefined
+  loadStatus: ProcessingStatus;
 }
 
 export const initialMarketState: MarketState = {
   products: [],
   productsMaxPrice: 0,
   loadStatus: undefined
+};
+
+// New product state
+export interface NewProductState {
+  saveStatus: ProcessingStatus;
+}
+
+export const initialNewProductState: NewProductState = {
+  saveStatus: undefined
 };
 
 // Purchases state
@@ -39,14 +48,16 @@ export const initialCartState: CartState = {
 // App state
 export interface AppState {
   marketState: MarketState;
-  cartState: CartState;
+  newProductState: NewProductState;
   purchaseHistoryState: PurchaseHistoryState;
+  cartState: CartState;
 }
 
 export const initialState: AppState = {
   marketState: initialMarketState,
-  cartState: initialCartState,
-  purchaseHistoryState: initialPurchaseHistoryState
+  newProductState: initialNewProductState,
+  purchaseHistoryState: initialPurchaseHistoryState,
+  cartState: initialCartState
 };
 
 export const MarketFeature = 'minimarket';
@@ -121,5 +132,27 @@ export const reducer = createReducer(
   on(clearCart, (state) => ({
     ...state,
     cartState: initialCartState
+  })),
+  on(addNewProductSuccess, (state) => ({
+    ...state,
+    newProductState: {
+      ...state.newProductState,
+      saveStatus: 'SUCCESS'
+    }
+  })),
+  on(addNewProductFailure, (state) => ({
+    ...state,
+    newProductState: {
+      ...state.newProductState,
+      saveStatus: 'FAILURE'
+    }
+  })),
+  on(clearNewProductSaveStatus, (state) => ({
+    ...state,
+    newProductState: {
+      ...state.newProductState,
+      saveStatus: undefined
+    }
   }))
+
 );

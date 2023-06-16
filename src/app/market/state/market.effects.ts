@@ -5,7 +5,7 @@ import {of} from 'rxjs';
 import {switchMap, map, catchError, tap} from 'rxjs/operators';
 import {ProductService} from '../service/product.service';
 import {PurchaseService} from '../service/purchase.service';
-import {clearCart, filterProducts, loadProducts, loadProductsFailure, loadProductsSuccess, loadPurchases, loadPurchasesFailure, loadPurchasesSuccess, searchPurchases, submitPurchase, submitPurchaseFailure, submitPurchaseSuccess} from './market.actions';
+import {addNewProduct, addNewProductFailure, addNewProductSuccess, clearCart, filterProducts, loadProducts, loadProductsFailure, loadProductsSuccess, loadPurchases, loadPurchasesFailure, loadPurchasesSuccess, searchPurchases, submitPurchase, submitPurchaseFailure, submitPurchaseSuccess} from './market.actions';
 
 @Injectable()
 export class MarketEffects {
@@ -25,11 +25,6 @@ export class MarketEffects {
             map((products) => loadProductsSuccess({products})),
             catchError((error: HttpErrorResponse) => of(loadProductsFailure({error})))
           );
-
-        // map(() =>{
-        //   const products = this.getAllProducts();
-        //   return loadProductsSuccess({products});
-
       })
     )
   );
@@ -50,7 +45,7 @@ export class MarketEffects {
     this.actions$.pipe(
       ofType(loadProductsSuccess),
       tap(() => {
-        console.log('loadProductsSuccess');
+        // do smth
       })
     ),
     {dispatch: false}
@@ -105,31 +100,15 @@ export class MarketEffects {
     )
   );
 
-  private getAllProducts() {
-    const p1 = {
-      id: 1,
-      name: 'Apple',
-      category: 'FRUITS',
-      price: 2.4,
-      description: 'Natural apple'
-    };
+  addNewProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addNewProduct),
+      switchMap((action) => {
+        return this.productService.addNewProduct(action.product).pipe(
+          map(() => addNewProductSuccess()),
+          catchError((error) => of(addNewProductFailure({error}))));
+      })
+    )
+  );
 
-    const p2 = {
-      id: 2,
-      name: 'Orange',
-      category: 'FRUITS',
-      price: 3.5,
-      description: 'Natural Orange'
-    };
-
-    const p3 = {
-      id: 3,
-      name: 'Lollipop',
-      category: 'SWEETS',
-      price: 0.7,
-      description: 'Colorful'
-    };
-    const products = [p1, p2, p3];
-    return products;
-  }
 }

@@ -71,3 +71,21 @@ export const searchPurchases = createAction(
   '[MARKET] SEARCH_PURCHASES',
   props<{filterParams: PurchaseFilterParams}>()
 );
+
+export const addNewProduct = createAction(
+  '[MARKET] ADD_NEW_PRODUCT',
+  props<{product: Product}>()
+);
+
+export const addNewProductSuccess = createAction(
+  '[MARKET] ADD_NEW_PRODUCT_SUCCESS'
+);
+
+export const addNewProductFailure = createAction(
+  '[MARKET] ADD_NEW_PRODUCT_FAILURE',
+  props<{error: HttpErrorResponse}>()
+);
+
+export const clearNewProductSaveStatus = createAction(
+  '[MARKET] CLEAR_NEW_PRODUCT_SAVE_STATUS'
+);

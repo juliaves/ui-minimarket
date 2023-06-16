@@ -86,3 +86,7 @@ input[type="range"] {
   width: 200px;
   margin: 0;
 }
+
+.bg-custom-green {
+  background-color: rgb(188, 221, 145) !important;
+}

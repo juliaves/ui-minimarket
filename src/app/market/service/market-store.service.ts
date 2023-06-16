@@ -5,10 +5,11 @@ import {CartProduct} from '../models/cart-product.model';
 import {ProductFilter} from '../models/product-filter.model';
 import {Product} from '../models/product.model';
 import {Purchase} from '../models/purchase.model';
-import {addProductToCart, clearCart, filterProducts, loadProducts, loadPurchases, removeProductFromCart, searchPurchases, submitPurchase} from '../state/market.actions';
+import {addNewProduct, addProductToCart, clearNewProductSaveStatus, filterProducts, loadProducts, loadPurchases, removeProductFromCart, searchPurchases, submitPurchase} from '../state/market.actions';
 import {MarketState} from '../state/market.reducer';
-import {selectCartProducts, selectProducts, selectPurchases} from '../state/market.selectors';
+import {selectCartProducts, selectNewProductSaveStatus, selectProducts, selectPurchases} from '../state/market.selectors';
 import {PurchaseFilterParams} from '../models/purchase-filter-params.model';
+import {ProcessingStatus} from '../models/processing-status.type';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,10 @@ export class MarketStoreService{
 
     purchases(): Observable<Purchase[]> {
       return this.store.pipe(select(selectPurchases));
+    }
+
+    newProductSaveStatus(): Observable<ProcessingStatus> {
+      return this.store.pipe(select(selectNewProductSaveStatus));
     }
    
   })(this.store);
@@ -64,6 +69,14 @@ export class MarketStoreService{
 
     searchPurchases(filterParams: PurchaseFilterParams): void {
       this.store.dispatch(searchPurchases({filterParams}));
+    }
+
+    addNewProduct(product: Product): void {
+      this.store.dispatch(addNewProduct({product}));
+    }
+    
+    clearNewProductSaveStatus(): void {
+      this.store.dispatch(clearNewProductSaveStatus());
     }
     
   })(this.store);

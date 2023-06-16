@@ -10,12 +10,14 @@ import {AppRequiredMarkerComponent} from './components/required-marker.component
 import {MarketEffects} from './state/market.effects';
 import {MarketFeature, reducer} from './state/market.reducer';
 import {PurchaseHistoryComponent} from './components/purchase-history/purchase-history.component';
+import {NewProductComponent} from './components/new-product/new-product.component';
 
 @NgModule({
   declarations: [
     ProductsListComponent,
     CartComponent,
     PurchaseHistoryComponent,
+    NewProductComponent,
     AppRequiredMarkerComponent
   ],
   imports: [
@@ -29,6 +31,7 @@ import {PurchaseHistoryComponent} from './components/purchase-history/purchase-h
   exports: [
     ProductsListComponent,
     PurchaseHistoryComponent,
+    NewProductComponent,
     CartComponent
   ]
 })

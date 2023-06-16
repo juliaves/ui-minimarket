@@ -10,6 +10,10 @@
           (click)="selectTab('PRODUCTS')">Products</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link fc-white cur-pointer" [ngClass]="selectedTab === 'NEW_PRODUCT' ? 'active' : ''"
+          (click)="selectTab('NEW_PRODUCT')">Add product</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link fc-white cur-pointer" [ngClass]="selectedTab === 'PURCHASE_HISTORY' ? 'active' : ''"
           (click)="selectTab('PURCHASE_HISTORY')">Purchase History</a>
       </li>
@@ -30,6 +34,8 @@
   <app-products-list *ngIf="selectedTab === 'PRODUCTS'"
     (onCartProductAdded)="onCartProductAdded($event)">
   </app-products-list>
+
+  <app-new-product *ngIf="selectedTab === 'NEW_PRODUCT'"></app-new-product>
   
   <app-purchase-history *ngIf="selectedTab === 'PURCHASE_HISTORY'"></app-purchase-history>
   

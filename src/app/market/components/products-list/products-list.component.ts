@@ -41,6 +41,13 @@ export class ProductsListComponent extends Destroyable implements OnInit, AfterC
     this.cdref.detectChanges();
   }
 
+  getDescriptionBgColor(product: Product) {
+    if (product.description) {
+      return 'bg-custom-green';
+    }
+    return '';
+  }
+
   addProductToCart(product: Product) {
     const cartProduct = {
       ...product, 
@@ -58,9 +65,6 @@ export class ProductsListComponent extends Destroyable implements OnInit, AfterC
       ...this.filter,
       category: category
     };
-    if (category === this.chooseOption) {
-      category = '';
-    }
     this.marketStoreService.dispatch.filterProducts(this.filter);
   }
 

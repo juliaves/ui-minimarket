@@ -1,1 +1,1 @@
-export type AppTab = 'PRODUCTS' | 'PURCHASE_HISTORY' | 'CART';
+export type AppTab = 'PRODUCTS' | 'NEW_PRODUCT' | 'PURCHASE_HISTORY' | 'CART';

@@ -1,0 +1,62 @@
+<div *ngIf="alertMessage.message" class="alert text-center" [ngClass]="alertMessage.status === 'ERROR' ? 'alert-danger': (alertMessage.status === 'SUCCESS' ? 'alert-success': '') " role="alert">
+  {{alertMessage.message}}
+</div>
+
+<div class="d-flex flex-row mb-3 justify-content-center">
+  <div class="col col-sm-5">
+      <div class="container">
+        <h5 class="mrg-vert">NEW PRODUCT</h5>
+        <form [formGroup]="form">
+          <!-- CATEGORY -->
+          <div class="mb-3 row">
+            <label for="formCategory" class="col-form-label col-sm-3 fs-15">
+              <app-required-marker></app-required-marker>Category:
+            </label>
+            <div class="col-sm-3 dropdown">
+              <button id="formCategory" class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">{{selectedCategory === '' ? chooseOption : selectedCategory}}
+              </button>
+              <ul class="dropdown-menu">
+                <li *ngFor="let category of categories">
+                  <a class="dropdown-item cur-pointer" (click)="chooseCategory(category)">{{category === '' ?
+                    chooseOption : category}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- NAME -->
+          <div class="mb-3 row">
+            <label for="formName" class="col-form-label col-sm-3 fs-15">
+              <app-required-marker></app-required-marker>Name:
+            </label>
+            <div class="col-sm-7">
+            <input formControlName="name" type="text" class="form-control" id="formName">
+          </div>
+          </div>
+          <!-- PRICE -->
+          <div class="mb-3 row">
+            <label for="formPrice" class="col-sm-3 col-form-label fs-15">
+              <app-required-marker></app-required-marker>Price:
+            </label>
+            <div class="col-sm-3">
+              <input formControlName="price" type="number" class="form-control" id="formPrice" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+            </div>
+            <div class="alert alert-danger text-left small-font pd-5" *ngIf="form.controls['price'].hasError('min')">
+              Minimum required number is 0.
+            </div>
+            <div class="alert alert-danger text-left small-font pd-5" *ngIf="form.controls['price'].hasError('max')">
+              Maximum available number is 100.
+            </div>
+          </div>
+          <!-- DESCRIPTION -->
+          <div class="mb-3">
+            <label for="formDescription" class="form-label fs-15">
+              Description:
+            </label>
+            <input formControlName="description" type="text" class="form-control" id="formDescription">
+          </div>
+        </form>
+        <button class="btn btn-success" (click)="addNewProduct()">Add product</button>
+      </div>
+  </div>
+</div>

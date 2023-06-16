@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {ProductFilter} from '../models/product-filter.model';
 import {Product} from '../models/product.model';
@@ -27,7 +27,10 @@ export class ProductService extends Destroyable {
     });
   }
   
-
+  addNewProduct(product: Product) {
+    const url = this.marketURL;
+    return this.http.post<void | HttpErrorResponse>(url, product);
+  }
 
 }
 
