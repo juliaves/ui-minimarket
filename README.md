@@ -10,7 +10,7 @@ If you have Git installed then clone the project:
 ```
 git clone https://github.com/juliaves/ui-minimarket.git
 ```
-or download the project's ZIP from _Code_ -> _Download ZIP_.
+or download the project's [ZIP](https://github.com/juliaves/ui-minimarket/archive/refs/heads/master.zip) from _Code_ -> _Download ZIP_.
 
 After that navigate to project folder: 
 ```
