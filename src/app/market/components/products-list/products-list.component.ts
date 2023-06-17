@@ -42,10 +42,10 @@ export class ProductsListComponent extends Destroyable implements OnInit, AfterC
   }
 
   getDescriptionBgColor(product: Product) {
-    if (product.description) {
-      return 'bg-custom-green';
+    if (!product.description) {
+      return '';
     }
-    return '';
+    return 'bg-custom-green';
   }
 
   addProductToCart(product: Product) {

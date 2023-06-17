@@ -16,6 +16,7 @@ export class CartComponent extends Destroyable implements OnInit {
 
   cartProducts: CartProduct[];
   errorMessage: string = null;
+  initialSum = '0';
 
   constructor(
     private marketStoreService: MarketStoreService
@@ -48,7 +49,7 @@ export class CartComponent extends Destroyable implements OnInit {
   }
 
   calculateTotalSum(cartProducts: CartProduct[]): any {
-    let sum = '0';
+    let sum = this.initialSum;
     cartProducts.forEach(product => {
       sum += (product.price * product.quantity)
     });
