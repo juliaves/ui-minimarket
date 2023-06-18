@@ -16,6 +16,10 @@ After that navigate to project folder:
 ```
 cd ui-minimarket
 ```
+Install angular-cli by running:
+```
+npm install -g @angular/cli
+```
 and install all dependencies by running:
 ```
 npm install
