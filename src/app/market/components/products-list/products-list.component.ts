@@ -45,6 +45,11 @@ export class ProductsListComponent extends Destroyable implements OnInit, AfterC
     if (!product.description) {
       return '';
     }
+    const greenBgClass = this.getGreenBgClass();
+    return greenBgClass;
+  }
+
+  getGreenBgClass() {
     return 'bg-custom-green';
   }
 
